@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#1a1a2e" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Roteiro Yago & Luana 🇫🇷🇬🇧</title>
+  <link rel="manifest" href="manifest.json" />
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #1a1a2e;
+      --secondary: #16213e;
+      --accent: #e94560;
+      --gold: #f5a623;
+      --teal: #0f9b8e;
+      --light: #f8f9fa;
+      --muted: #6c757d;
+      --card-bg: #ffffff;
+      --shadow: 0 4px 20px rgba(0,0,0,0.12);
+      --radius: 16px;
+      --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: #f0f2f5;
+      color: #1a1a2e;
+      min-height: 100vh;
+      padding-bottom: 80px;
+    }
+
+    /* ===== HEADER ===== */
+    .app-header {
+      background: linear-gradient(135deg, var(--primary) 0%, #0f3460 100%);
+      color: white;
+      padding: 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+    }
+    .header-back {
+      background: rgba(255,255,255,0.15);
+      border: none;
+      color: white;
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .header-back:hover { background: rgba(255,255,255,0.25); }
+    .header-title { font-size: 17px; font-weight: 700; letter-spacing: 0.3px; }
+    .header-subtitle { font-size: 11px; opacity: 0.75; text-align: center; }
+
+    /* ===== BOTTOM NAV ===== */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: white;
+      display: flex;
+      border-top: 1px solid #e0e0e0;
+      z-index: 200;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+    }
+    .nav-btn {
+      flex: 1;
+      border: none;
+      background: none;
+      padding: 10px 4px 8px;
+      cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-btn .icon { font-size: 22px; line-height: 1; }
+    .nav-btn.active { color: var(--accent); }
+    .nav-btn.active .icon { transform: scale(1.1); }
+
+    /* ===== SCREENS ===== */
+    .screen { display: none; padding: 16px; }
+    .screen.active { display: block; }
+
+    /* ===== HERO CARD ===== */
+    .hero {
+      background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 60%, #e94560 100%);
+      border-radius: var(--radius);
+      color: white;
+      padding: 32px 24px;
+      margin-bottom: 16px;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 160px; height: 160px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 50%;
+    }
+    .hero-flags { font-size: 42px; margin-bottom: 8px; }
+    .hero-names { font-size: 28px; font-weight: 800; margin-bottom: 4px; }
+    .hero-dates {
+      font-size: 14px;
+      background: rgba(255,255,255,0.2);
+      display: inline-block;
+      padding: 4px 16px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+    .hero-cities { display: flex; gap: 12px; justify-content: center; }
+    .hero-city {
+      background: rgba(255,255,255,0.15);
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    /* ===== CARDS ===== */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow);
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .card-icon {
+      width: 42px; height: 42px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .card-title { font-size: 16px; font-weight: 700; }
+    .card-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+    /* ===== SECTION HEADERS ===== */
+    .section-header {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 20px 0 10px;
+    }
+
+    /* ===== DAY SELECTOR ===== */
+    .day-scroll {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 4px 0 12px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .day-scroll::-webkit-scrollbar { display: none; }
+    .day-chip {
+      flex-shrink: 0;
+      border: none;
+      background: white;
+      border-radius: 12px;
+      padding: 10px 16px;
+      cursor: pointer;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: all 0.2s;
+      min-width: 68px;
+    }
+    .day-chip.active {
+      background: var(--accent);
+      color: white;
+      transform: translateY(-2px);
+    }
+    .day-chip .day-num { font-size: 18px; font-weight: 800; line-height: 1; }
+    .day-chip .day-month { font-size: 10px; font-weight: 600; opacity: 0.7; margin-top: 2px; }
+    .day-chip .day-label { font-size: 9px; margin-top: 3px; }
+
+    /* ===== TIMELINE ===== */
+    .timeline { position: relative; }
+    .timeline-item {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 0;
+      position: relative;
+    }
+    .timeline-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 48px;
+      flex-shrink: 0;
+    }
+    .timeline-time {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+    .timeline-dot {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin: 4px 0;
+      flex-shrink: 0;
+      border: 2px solid white;
+      box-shadow: 0 0 0 2px var(--accent);
+    }
+    .timeline-line {
+      width: 2px;
+      flex: 1;
+      background: linear-gradient(to bottom, var(--accent) 0%, #e0e0e0 100%);
+      min-height: 30px;
+    }
+    .timeline-last .timeline-line { display: none; }
+    .timeline-content {
+      flex: 1;
+      background: white;
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      border-left: 3px solid transparent;
+    }
+    .timeline-content.highlight { border-left-color: var(--gold); }
+    .timeline-content.transport { border-left-color: var(--teal); }
+    .timeline-content.food { border-left-color: #f06292; }
+    .timeline-content h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+    .timeline-content p { font-size: 13px; color: #444; line-height: 1.5; }
+    .timeline-content .info-box {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 8px 10px;
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .timeline-content .alert-box {
+      background: #fff3cd;
+      border: 1px solid #ffc107;
+      border-radius: 8px;
+      padding: 8px 10px;
+      margin-top: 8px;
+      font-size: 12px;
+      color: #856404;
+      line-height: 1.5;
+    }
+
+    /* ===== LINKS / BUTTONS ===== */
+    .btn-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--accent);
+      color: white;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      margin-top: 8px;
+      transition: opacity 0.2s;
+    }
+    .btn-link:hover { opacity: 0.85; }
+    .btn-link.teal { background: var(--teal); }
+    .btn-link.gold { background: var(--gold); color: #1a1a2e; }
+    .btn-link.outline {
+      background: transparent;
+      border: 2px solid var(--accent);
+      color: var(--accent);
+    }
+
+    /* ===== FLIGHT CARD ===== */
+    .flight-card {
+      background: linear-gradient(135deg, #1a1a2e, #0f3460);
+      color: white;
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 14px;
+    }
+    .flight-route {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 14px 0;
+    }
+    .flight-city { text-align: center; }
+    .flight-code { font-size: 28px; font-weight: 800; }
+    .flight-name { font-size: 11px; opacity: 0.7; margin-top: 2px; }
+    .flight-arrow {
+      flex: 1;
+      text-align: center;
+      position: relative;
+    }
+    .flight-line {
+      border-top: 1px dashed rgba(255,255,255,0.4);
+      margin: 0 10px;
+      position: relative;
+    }
+    .flight-plane { font-size: 20px; }
+    .flight-info {
+      display: flex;
+      justify-content: space-between;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 12px;
+      gap: 8px;
+    }
+    .flight-info div { text-align: center; }
+    .flight-info span { display: block; font-weight: 700; font-size: 14px; }
+    .flight-tag {
+      background: var(--accent);
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    /* ===== HOTEL CARD ===== */
+    .hotel-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #e8f5e9;
+      color: #2e7d32;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .hotel-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 13px;
+    }
+    .hotel-detail:last-child { border-bottom: none; }
+    .hotel-detail .label { color: var(--muted); font-size: 11px; min-width: 100px; font-weight: 600; }
+    .hotel-detail .value { font-weight: 600; flex: 1; }
+
+    /* ===== CHECKLIST ===== */
+    .checklist-group { margin-bottom: 20px; }
+    .checklist-group-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .checklist-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #f5f5f5;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .checklist-item:last-child { border-bottom: none; }
+    .checklist-item input[type="checkbox"] { display: none; }
+    .check-box {
+      width: 22px; height: 22px;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+      margin-top: 1px;
+    }
+    .checklist-item.checked .check-box {
+      background: var(--teal);
+      border-color: var(--teal);
+    }
+    .checklist-item.checked .check-box::after { content: '✓'; color: white; font-size: 13px; font-weight: 700; }
+    .checklist-item.checked .check-text { text-decoration: line-through; color: var(--muted); }
+    .check-text { font-size: 14px; line-height: 1.4; flex: 1; }
+
+    /* ===== GUIDE CARD ===== */
+    .guide-card {
+      background: white;
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+    }
+    .guide-card-header {
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .guide-card-header.paris { background: linear-gradient(135deg, #1a1a2e, #0f3460); color: white; }
+    .guide-card-header.london { background: linear-gradient(135deg, #0f3460, #16213e); color: white; }
+    .guide-card-content { padding: 16px 20px; font-size: 13px; line-height: 1.7; color: #444; }
+    .guide-card-content.hidden { display: none; }
+    .guide-tip {
+      background: #fff8e1;
+      border-left: 3px solid var(--gold);
+      padding: 10px 12px;
+      border-radius: 0 8px 8px 0;
+      margin: 10px 0;
+      font-size: 12px;
+      color: #5d4037;
+    }
+    .guide-alert {
+      background: #fce4ec;
+      border-left: 3px solid var(--accent);
+      padding: 10px 12px;
+      border-radius: 0 8px 8px 0;
+      margin: 10px 0;
+      font-size: 12px;
+      color: #880e4f;
+    }
+    .guide-step {
+      display: flex;
+      gap: 12px;
+      margin: 10px 0;
+      align-items: flex-start;
+    }
+    .guide-step-num {
+      width: 24px; height: 24px;
+      background: var(--accent);
+      color: white;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* ===== RESTAURANT CARD ===== */
+    .restaurant-card {
+      background: white;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      border-left: 4px solid var(--gold);
+    }
+    .restaurant-name { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+    .restaurant-desc { font-size: 13px; color: #555; line-height: 1.5; margin-bottom: 8px; }
+    .restaurant-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .tag {
+      background: #f0f0f0;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      color: #555;
+      font-weight: 500;
+    }
+
+    /* ===== OVERVIEW ===== */
+    .overview-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 18px;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow);
+    }
+    .overview-city {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .city-flag { font-size: 32px; }
+    .city-name { font-size: 20px; font-weight: 800; }
+    .city-dates { font-size: 12px; color: var(--muted); }
+    .progress-bar {
+      height: 6px;
+      background: #e0e0e0;
+      border-radius: 3px;
+      overflow: hidden;
+      margin: 6px 0;
+    }
+    .progress-fill { height: 100%; border-radius: 3px; background: var(--accent); }
+
+    /* ===== TABS ===== */
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      flex-shrink: 0;
+      padding: 8px 16px;
+      border: 2px solid #e0e0e0;
+      background: white;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--muted);
+      transition: all 0.2s;
+    }
+    .tab-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+    }
+
+    /* ===== MISC ===== */
+    .info-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .badge-paris { background: #e8eaf6; color: #3949ab; }
+    .badge-london { background: #fce4ec; color: #c62828; }
+    .divider { height: 1px; background: #f0f0f0; margin: 12px 0; }
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--muted);
+    }
+    .empty-state .icon { font-size: 48px; margin-bottom: 12px; }
+
+    /* ===== TICKET INFO ===== */
+    .ticket-box {
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      border: 2px dashed #dee2e6;
+      border-radius: 12px;
+      padding: 14px;
+      margin-top: 10px;
+    }
+    .ticket-box h5 { font-size: 13px; font-weight: 700; margin-bottom: 8px; color: var(--primary); }
+    .ticket-box p { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+    /* SCROLL PADDING TOP for sticky header */
+    .screen { padding-top: 16px; }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="app-header">
+  <div class="header-inner">
+    <button class="header-back" id="backBtn" onclick="goBack()" style="visibility:hidden">←</button>
+    <div style="text-align:center">
+      <div class="header-title" id="headerTitle">Yago & Luana 🇫🇷🇬🇧</div>
+      <div class="header-subtitle" id="headerSub">24 Dez – 01 Jan 2025/26</div>
+    </div>
+    <div style="width:38px"></div>
+  </div>
+</div>
+
+<!-- SCREENS -->
+<div id="screen-home" class="screen active">
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-flags">🇫🇷 🇬🇧</div>
+    <div class="hero-names">Yago & Luana</div>
+    <div class="hero-dates">24 Dez 2025 – 01 Jan 2026</div>
+    <div class="hero-cities">
+      <div class="hero-city">🗼 Paris · 5 noites</div>
+      <div class="hero-city">🎡 Londres · 3 noites</div>
+    </div>
+  </div>
+
+  <!-- Quick access -->
+  <p class="section-header">Acesso Rápido</p>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:16px">
+    <button class="card" style="border:none;cursor:pointer;text-align:left" onclick="goScreen('screen-flights')">
+      <div style="font-size:28px;margin-bottom:6px">✈️</div>
+      <div style="font-weight:700;font-size:14px">Voos</div>
+      <div style="font-size:11px;color:#999">Detalhes dos voos</div>
+    </button>
+    <button class="card" style="border:none;cursor:pointer;text-align:left" onclick="goScreen('screen-hotels')">
+      <div style="font-size:28px;margin-bottom:6px">🏨</div>
+      <div style="font-weight:700;font-size:14px">Hotéis</div>
+      <div style="font-size:11px;color:#999">Paris & Londres</div>
+    </button>
+    <button class="card" style="border:none;cursor:pointer;text-align:left" onclick="goScreen('screen-checklist')">
+      <div style="font-size:28px;margin-bottom:6px">✅</div>
+      <div style="font-weight:700;font-size:14px">Checklist</div>
+      <div style="font-size:11px;color:#999">Pré-viagem</div>
+    </button>
+    <button class="card" style="border:none;cursor:pointer;text-align:left" onclick="goScreen('screen-guides')">
+      <div style="font-size:28px;margin-bottom:6px">📖</div>
+      <div style="font-weight:700;font-size:14px">Mini Guias</div>
+      <div style="font-size:11px;color:#999">Metrô, Louvre…</div>
+    </button>
+  </div>
+
+  <!-- Overview -->
+  <p class="section-header">Visão Geral da Viagem</p>
+  <div class="overview-card">
+    <div class="overview-city">
+      <div class="city-flag">🇫🇷</div>
+      <div>
+        <div class="city-name">Paris</div>
+        <div class="city-dates">24 Dez – 29 Dez · 5 noites</div>
+      </div>
+      <span class="info-badge badge-paris" style="margin-left:auto">Dias 1–6</span>
+    </div>
+    <div class="divider"></div>
+    <div class="overview-city" style="margin-bottom:0">
+      <div class="city-flag">🇬🇧</div>
+      <div>
+        <div class="city-name">Londres</div>
+        <div class="city-dates">29 Dez – 01 Jan · 3 noites</div>
+      </div>
+      <span class="info-badge badge-london" style="margin-left:auto">Dias 7–9</span>
+    </div>
+  </div>
+
+  <!-- Restaurants -->
+  <p class="section-header">Restaurantes em Paris</p>
+  <div id="restaurantCards"></div>
+</div>
+
+<!-- FLIGHTS SCREEN -->
+<div id="screen-flights" class="screen">
+  <p class="section-header">Voo 1 · Chegada</p>
+  <div class="flight-card">
+    <span class="flight-tag">✈️ CHEGADA · 24 DEZ</span>
+    <div class="flight-route">
+      <div class="flight-city">
+        <div class="flight-code">OPO</div>
+        <div class="flight-name">Porto</div>
+        <div style="font-size:18px;font-weight:800;margin-top:4px">14h00</div>
+      </div>
+      <div class="flight-arrow">
+        <div style="font-size:24px;margin-bottom:4px">✈️</div>
+        <div class="flight-line"></div>
+        <div style="font-size:11px;opacity:0.7;margin-top:4px">2h10</div>
+      </div>
+      <div class="flight-city">
+        <div class="flight-code">ORY</div>
+        <div class="flight-name">Paris Orly</div>
+        <div style="font-size:18px;font-weight:800;margin-top:4px">17h10</div>
+      </div>
+    </div>
+    <div class="flight-info">
+      <div>Cia. Aérea<span>Vueling</span></div>
+      <div>Voo<span>VY 5329</span></div>
+      <div>Terminal<span>Orly</span></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:14px">
+    <h4 style="font-size:14px;font-weight:700;margin-bottom:10px">🚕 Do Aeroporto ao Hotel</h4>
+    <p style="font-size:13px;color:#444;line-height:1.6;margin-bottom:10px">
+      Taxi com valor fixo de <strong>€36</strong>. Tempo estimado: ~50 min. Siga as placas "Taxi" e pegue a fila no exterior.
+    </p>
+    <div class="alert-box" style="margin:0">
+      ⚠️ <strong>Atenção:</strong> Não aceite ofertas de táxis de pessoas nos saguões ou fora da fila oficial.
+    </div>
+    <div class="info-box" style="margin-top:10px">
+      📍 Pontos de táxi:<br>
+      Orly 1: Nível 0, Porta 14a<br>
+      Orly 2: Nível 0, Porta 14a<br>
+      Orly 3: Nível 0, Porta 32a<br>
+      Orly 4: Nível 0, Porta 48a
+    </div>
+  </div>
+
+  <p class="section-header">Voo 2 · Paris → Londres</p>
+  <div class="flight-card">
+    <span class="flight-tag">✈️ CONEXÃO · 29 DEZ</span>
+    <div class="flight-route">
+      <div class="flight-city">
+        <div class="flight-code">ORY</div>
+        <div class="flight-name">Paris Orly</div>
+        <div style="font-size:18px;font-weight:800;margin-top:4px">18h25</div>
+      </div>
+      <div class="flight-arrow">
+        <div style="font-size:24px;margin-bottom:4px">✈️</div>
+        <div class="flight-line"></div>
+        <div style="font-size:11px;opacity:0.7;margin-top:4px">1h10</div>
+      </div>
+      <div class="flight-city">
+        <div class="flight-code">LGW</div>
+        <div class="flight-name">Londres Gatwick</div>
+        <div style="font-size:18px;font-weight:800;margin-top:4px">18h35</div>
+      </div>
+    </div>
+    <div class="flight-info">
+      <div>Cia. Aérea<span>Vueling</span></div>
+      <div>Voo<span>VY 6948</span></div>
+      <div>Duração<span>1h10</span></div>
+    </div>
+  </div>
+
+  <p class="section-header">Voo 3 · Retorno</p>
+  <div class="flight-card" style="background:linear-gradient(135deg,#1b5e20,#2e7d32)">
+    <span class="flight-tag" style="background:rgba(255,255,255,0.3)">🏠 RETORNO · 01 JAN</span>
+    <div class="flight-route">
+      <div class="flight-city">
+        <div class="flight-code">LGW</div>
+        <div class="flight-name">Gatwick</div>
+        <div style="font-size:18px;font-weight:800;margin-top:4px">14h20</div>
+      </div>
+      <div class="flight-arrow">
+        <div style="font-size:24px;margin-bottom:4px">✈️</div>
+        <div class="flight-line"></div>
+      </div>
+      <div class="flight-city">
+        <div class="flight-code">OPO</div>
+        <div class="flight-name">Porto</div>
+      </div>
+    </div>
+    <div class="flight-info">
+      <div>Cia. Aérea<span>British Airways</span></div>
+      <div>Partida<span>14h20</span></div>
+      <div>Data<span>01 Jan</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- HOTELS SCREEN -->
+<div id="screen-hotels" class="screen">
+  <p class="section-header">🇫🇷 Paris · 24–29 Dez</p>
+  <div class="card">
+    <div class="hotel-badge">✓ Confirmado</div>
+    <div class="card-header" style="margin-bottom:12px">
+      <div class="card-icon" style="background:#e8eaf6;font-size:22px">🏨</div>
+      <div>
+        <div class="card-title">Ibis Styles Paris Eiffel Cambronne</div>
+        <div class="card-sub">166 Boulevard De Grenelle, Paris 75015</div>
+      </div>
+    </div>
+    <div class="hotel-detail">
+      <span class="label">Check-in</span>
+      <span class="value">24 Dez · a partir das 15h00</span>
+    </div>
+    <div class="hotel-detail">
+      <span class="label">Check-out</span>
+      <span class="value">29 Dez · até as 12h00</span>
+    </div>
+    <div class="hotel-detail">
+      <span class="label">Reserva Nº</span>
+      <span class="value" style="font-family:monospace;font-size:12px">72067164269565</span>
+    </div>
+    <div class="hotel-detail">
+      <span class="label">Custo Total</span>
+      <span class="value">R$ 4.555,05</span>
+    </div>
+    <div class="hotel-detail">
+      <span class="label">Telefone</span>
+      <span class="value"><a href="tel:+33140612121" style="color:var(--accent)">+33 1 40 61 21 21</a></span>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+      <a href="https://maps.google.com/?q=166+Boulevard+De+Grenelle+Paris" target="_blank" class="btn-link teal">📍 Google Maps</a>
+      <a href="https://all.accor.com/hotel/1400/index.pt.shtml" target="_blank" class="btn-link">🌐 Site do Hotel</a>
+    </div>
+  </div>
+
+  <p class="section-header">🇬🇧 Londres · 29 Dez – 01 Jan</p>
+  <div class="card">
+    <div class="hotel-badge">✓ Confirmado</div>
+    <div class="card-header" style="margin-bottom:12px">
+      <div class="card-icon" style="background:#fce4ec;font-size:22px">🏨</div>
+      <div>
+        <div class="card-title">Hub by Premier Inn London King's Cross</div>
+        <div class="card-sub">50 Wharfdale Road, London, England</div>
+      </div>
+    </div>
+    <div class="hotel-detail">
+      <span class="label">Check-in</span>
+      <span class="value">29 Dez · a partir das 15h00</span>
+    </div>
+    <div class="hotel-detail">
+      <span class="label">Reserva Nº</span>
+      <span class="value" style="font-family:monospace;font-size:12px">72066791475192</span>
+    </div>
+    <div style="margin-top:12px">
+      <a href="https://maps.google.com/?q=50+Wharfdale+Road+London" target="_blank" class="btn-link teal">📍 Google Maps</a>
+    </div>
+  </div>
+</div>
+
+<!-- SCHEDULE SCREEN -->
+<div id="screen-schedule" class="screen">
+  <div class="day-scroll" id="dayScroll"></div>
+  <div id="dayContent"></div>
+</div>
+
+<!-- CHECKLIST SCREEN -->
+<div id="screen-checklist" class="screen">
+  <div class="card">
+    <h3 style="font-size:17px;font-weight:800;margin-bottom:4px">✅ Checklist Pré-Viagem</h3>
+    <p style="font-size:12px;color:#999">Toque em cada item para marcar como feito</p>
+  </div>
+  <div id="checklistContent"></div>
+</div>
+
+<!-- GUIDES SCREEN -->
+<div id="screen-guides" class="screen">
+  <div id="guidesContent"></div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <button class="nav-btn active" onclick="navTo('home')" id="nav-home">
+    <span class="icon">🏠</span>
+    <span>Início</span>
+  </button>
+  <button class="nav-btn" onclick="navTo('flights')" id="nav-flights">
+    <span class="icon">✈️</span>
+    <span>Voos</span>
+  </button>
+  <button class="nav-btn" onclick="navTo('schedule')" id="nav-schedule">
+    <span class="icon">📅</span>
+    <span>Roteiro</span>
+  </button>
+  <button class="nav-btn" onclick="navTo('hotels')" id="nav-hotels">
+    <span class="icon">🏨</span>
+    <span>Hotéis</span>
+  </button>
+  <button class="nav-btn" onclick="navTo('guides')" id="nav-guides">
+    <span class="icon">📖</span>
+    <span>Guias</span>
+  </button>
+</nav>
+
+<script>
+// ==============================
+// DATA
+// ==============================
+const restaurants = [
+  {
+    name: "La Place Gustave",
+    desc: "Bar e restaurante dentro do hotel Ibis Cambronne. Culinária francesa e europeia com ambiente acolhedor e ótimos drinks.",
+    tags: ["Francesa", "Europeia", "Próximo ao hotel"],
+    maps: "https://maps.google.com/?q=La+Place+Gustave+Paris+Cambronne"
+  },
+  {
+    name: "Le Caffé Cambronne",
+    desc: "Na 5 Place Cambronne. Culinária francesa clássica e ambiente aconchegante.",
+    tags: ["Francesa", "Aconchegante"],
+    maps: "https://maps.google.com/?q=Le+Caffe+Cambronne+Paris"
+  },
+  {
+    name: "Leontine",
+    desc: "Também na 5 Place Cambronne. Combina bar, pub e café para uma experiência variada.",
+    tags: ["Bar", "Pub", "Café"],
+    maps: "https://maps.google.com/?q=Leontine+Paris+Cambronne"
+  },
+  {
+    name: "Café des Artes",
+    desc: "Cozinha francesa, preço justo. Recomendações: sopa de cebola gratinada e Croque Madame.",
+    tags: ["Francesa", "Almoço", "Especialidades"],
+    maps: "https://maps.google.com/?q=Cafe+des+Artes+Paris+Ile+de+la+Cite"
+  },
+  {
+    name: "Le Relais Gascon",
+    desc: "Bistrô descontraído e acolhedor em Montmartre, famoso por pratos generosos da culinária do sudoeste da França.",
+    tags: ["Bistrô", "Montmartre", "Generoso"],
+    maps: "https://maps.google.com/?q=Le+Relais+Gascon+Montmartre+Paris"
+  },
+  {
+    name: "Bouillon Pigalle",
+    desc: "Releitura moderna dos tradicionais bouillons parisienses. Ambiente jovial, preços imbatíveis.",
+    tags: ["Econômico", "Montmartre", "Jovial"],
+    maps: "https://maps.google.com/?q=Bouillon+Pigalle+Paris"
+  }
+];
+
+const checklistData = [
+  {
+    group: "1. Documentação e Vistos",
+    icon: "📄",
+    items: [
+      "Passaporte válido (mínimo 6 meses antes do vencimento)",
+      "Seguro viagem (cobertura mínima de 30.000 euros – obrigatório Schengen)",
+      "Passagens de ida e volta",
+      "Comprovante de hospedagem ou carta-convite",
+      "Comprovantes financeiros (extratos bancários, cartões)"
+    ]
+  },
+  {
+    group: "2. Planejamento Financeiro",
+    icon: "💳",
+    items: [
+      "Cartões de crédito e débito desbloqueados para uso internacional",
+      "Dinheiro em espécie (euros e libras)",
+      "Aplicativos bancários configurados",
+      "Carteira antifurto ou doleira"
+    ]
+  },
+  {
+    group: "3. Bagagem e Itens Essenciais",
+    icon: "🧳",
+    items: [
+      "Mala dentro do peso permitido pela companhia aérea",
+      "Adaptador de tomada universal",
+      "Carregador portátil para celular",
+      "Chip internacional ou eSIM para internet",
+      "Medicamentos essenciais com receita médica",
+      "Roupas adequadas (inverno europeu – camadas térmicas!)",
+      "Tênis confortáveis para caminhadas",
+      "Luvas, gorro e casaco corta-vento",
+      "Necessaire com itens básicos"
+    ]
+  }
+];
+
+const days = [
+  {
+    num: "24",
+    month: "DEZ",
+    label: "Dia 1",
+    city: "Paris",
+    title: "Chegada em Paris 🗼",
+    events: [
+      {
+        time: "14h00",
+        icon: "✈️",
+        title: "Partida de Porto (OPO)",
+        desc: "Voo VY 5329 da Vueling",
+        type: "transport"
+      },
+      {
+        time: "17h10",
+        icon: "🛬",
+        title: "Chegada em Paris Orly",
+        desc: "Pegar táxi com valor fixo de €36. Tempo estimado: 50 min.",
+        info: "⚠️ Siga as placas 'Taxi' e fique na fila oficial. Não aceite ofertas dentro do terminal.",
+        type: "transport",
+        links: [{ label: "📍 Aeroporto Orly", url: "https://maps.google.com/?q=Paris+Orly+Airport" }]
+      },
+      {
+        time: "18h00",
+        icon: "🏨",
+        title: "Check-in no Hotel",
+        desc: "Ibis Styles Paris Eiffel Cambronne – 166 Bd de Grenelle",
+        type: "highlight",
+        links: [{ label: "📍 Ver no Mapa", url: "https://maps.google.com/?q=166+Boulevard+De+Grenelle+Paris" }]
+      },
+      {
+        time: "18h20",
+        icon: "🎄",
+        title: "Mercado de Natal de Paris",
+        desc: "Ir a pé até La Motte-Picquet–Grenelle → Metrô Linha 8 sentido Créteil-Pointe du Lac → descer em Concorde.",
+        info: "🎄 Por ser véspera de Natal, o mercado fecha às 20h. Vá o quanto antes!",
+        type: "highlight",
+        links: [
+          { label: "🗺️ Rota Metrô", url: "https://maps.google.com/?q=Place+de+la+Concorde+Paris+Christmas+Market" }
+        ]
+      },
+      {
+        time: "20h20",
+        icon: "🏨",
+        title: "Voltar ao Hotel",
+        desc: "Mesmo caminho ao contrário. Boa noite! 🌙",
+        type: ""
+      }
+    ]
+  },
+  {
+    num: "25",
+    month: "DEZ",
+    label: "Dia 2",
+    city: "Paris",
+    title: "Feliz Natal! Tour pelo coração de Paris 🎄",
+    events: [
+      {
+        time: "08h00",
+        icon: "☕",
+        title: "Bom dia & Feliz Natal!",
+        desc: "Café da manhã no hotel ou em uma das boulangeries ao redor.",
+        type: "food"
+      },
+      {
+        time: "09h00",
+        icon: "⛪",
+        title: "Capela Nossa Sra. da Medalha Milagrosa",
+        desc: "Metrô Linha 10 sentido Gare d'Austerlitz → descer em Sèvres-Babylone → 5 min a pé.",
+        info: "Santuário mariano onde Santa Catarina Labouré recebeu aparições da Virgem Maria em 1830.",
+        type: "highlight",
+        links: [{ label: "📍 Ver no Mapa", url: "https://maps.google.com/?q=Chapelle+Notre-Dame+de+la+Médaille+Miraculeuse+Paris" }]
+      },
+      {
+        time: "10h15",
+        icon: "🌿",
+        title: "Jardim de Luxemburgo",
+        desc: "15 min a pé da Chapel. Criado em 1612 pela rainha Maria de Médici.",
+        type: "highlight",
+        links: [{ label: "📍 Ver no Mapa", url: "https://maps.google.com/?q=Jardin+du+Luxembourg+Paris" }]
+      },
+      {
+        time: "11h40",
+        icon: "⛩️",
+        title: "Catedral de Notre-Dame",
+        desc: "16 min a pé do Jardim. Ícone da arquitetura gótica medieval – reabriu em 2024!",
+        type: "highlight",
+        links: [{ label: "📍 Ver no Mapa", url: "https://maps.google.com/?q=Notre-Dame+Cathedral+Paris" }]
+      },
+      {
+        time: "13h20",
+        icon: "🏝️",
+        title: "Île de la Cité & Pont Neuf",
+        desc: "Passear pela Sainte-Chapelle e chegar na Pont Neuf. A ponte mais antiga de Paris (1578)!",
+        type: "highlight",
+        links: [{ label: "📍 Pont Neuf", url: "https://maps.google.com/?q=Pont+Neuf+Paris" }]
+      },
+      {
+        time: "13h40",
+        icon: "🍽️",
+        title: "Almoço – Café des Artes",
+        desc: "Culinária francesa, preço justo. Sugestões: sopa de cebola gratinada e Croque Madame!",
+        type: "food",
+        links: [{ label: "📍 Ver no Mapa", url: "https://maps.google.com/?q=Cafe+des+Artes+Paris" }]
+      },
+      {
+        time: "15h00",
+        icon: "🌸",
+        title: "Jardins das Tulherias",
+        desc: "16 min a pé. Criados no séc. XVI pela rainha Catarina de Médici. Entre o Louvre e a Concorde.",
+        type: "highlight",
+        links: [{ label: "📍 Ver no Mapa", url: "https://maps.google.com/?q=Jardins+des+Tuileries+Paris" }]
+      },
+      {
+        time: "15h40",
+        icon: "🏛️",
+        title: "Praça da Concórdia",
+        desc: "6 min a pé. Uma das maiores praças de Paris, com obeliscos egípcios e fontes ornamentadas.",
+        type: "highlight",
+        links: [{ label: "📍 Ver no Mapa", url: "https://maps.google.com/?q=Place+de+la+Concorde+Paris" }]
+      },
+      {
+        time: "16h40",
+        icon: "🛍️",
+        title: "Champs-Élysées & Arco do Triunfo",
+        desc: "Caminhar 30 min pela avenida mais famosa do mundo até o imponente Arco do Triunfo.",
+        type: "highlight",
+        links: [
+          { label: "📍 Arc du Triomphe", url: "https://maps.google.com/?q=Arc+de+Triomphe+Paris" },
+          { label: "📍 Champs-Élysées", url: "https://maps.google.com/?q=Champs-Élysées+Paris" }
+        ]
+      },
+      {
+        time: "19h00",
+        icon: "🚇",
+        title: "Voltar ao Hotel",
+        desc: "Metrô Linha 6 sentido Nation → descer La Motte-Picquet–Grenelle → 3 min a pé.",
+        info: "🗼 DICA: Após a estação Passy, olhem para a esquerda – vista incrível da Torre Eiffel!",
+        type: "transport"
+      },
+      {
+        time: "20h30",
+        icon: "🍷",
+        title: "Jantar próximo ao hotel",
+        desc: "La Place Gustave, Le Caffé Cambronne ou Leontine (todos na Place Cambronne).",
+        type: "food"
+      }
+    ]
+  },
+  {
+    num: "26",
+    month: "DEZ",
+    label: "Dia 3",
+    city: "Paris",
+    title: "Palácio de Versalhes 👑",
+    events: [
+      {
+        time: "08h00",
+        icon: "☕",
+        title: "Café da manhã",
+        desc: "No hotel ou comprar nas boulangeries para tomar no trem — a viagem até Versalhes é de 25 min!",
+        type: "food"
+      },
+      {
+        time: "08h20",
+        icon: "🚇",
+        title: "Partida para Versalhes",
+        desc: "Andar até La Motte-Picquet–Grenelle → Metrô Linha 10 sentido Boulogne Pont de Saint-Cloud → descer em Javel-André Citroën → 3 min a pé até a estação RER Gare de Javel.",
+        info: "💡 Guarde o bilhete do RER até o final da viagem!",
+        type: "transport"
+      },
+      {
+        time: "08h40",
+        icon: "🚂",
+        title: "Trem RER C",
+        desc: "Destino: Versailles Château Rive Gauche. Viagem de ~25 minutos.",
+        type: "transport"
+      },
+      {
+        time: "09h03",
+        icon: "🏰",
+        title: "Chegada em Versalhes",
+        desc: "Sair da estação e caminhar até a entrada do Palácio.",
+        links: [{ label: "📍 Ver no Mapa", url: "https://maps.google.com/?q=Palace+of+Versailles" }]
+      },
+      {
+        time: "09h10",
+        icon: "🎟️",
+        title: "Entrada – Portadores de Tickets",
+        desc: "Procurar a Entrada A (à esquerda) – exclusiva para quem tem tickets com hora marcada.",
+        info: "Audioguias disponíveis por €5 na entrada. Recomendado!"
+      },
+      {
+        time: "09h30",
+        icon: "✨",
+        title: "Visita ao Palácio e Jardins",
+        desc: "Programa de dia inteiro! Aproveitem com calma os salões dourados, a Galeria dos Espelhos e os magníficos jardins.",
+        type: "highlight",
+        links: [
+          { label: "📍 Jardins de Versalhes", url: "https://maps.google.com/?q=Gardens+of+Versailles" }
+        ]
+      },
+      {
+        time: "~17h",
+        icon: "🚂",
+        title: "Retorno a Paris",
+        desc: "Mesmo percurso da ida. Versailles Château Rive Gauche → RER C → Gare de Javel → Metrô Linha 10 → La Motte-Picquet–Grenelle.",
+        type: "transport"
+      },
+      {
+        time: "Noite",
+        icon: "🍽️",
+        title: "Jantar nos arredores do hotel",
+        desc: "Após um dia intenso, um dos restaurantes próximos ao Ibis Styles.",
+        type: "food"
+      }
+    ]
+  },
+  {
+    num: "27",
+    month: "DEZ",
+    label: "Dia 4",
+    city: "Paris",
+    title: "Museu do Louvre + Cruzeiro no Sena 🎨🛥️",
+    events: [
+      {
+        time: "07h00",
+        icon: "☕",
+        title: "Café da manhã",
+        desc: "No hotel ou nas boulangeries ao redor.",
+        type: "food"
+      },
+      {
+        time: "08h00",
+        icon: "🚇",
+        title: "Metrô para o Louvre",
+        desc: "Andar até La Motte-Picquet–Grenelle → Metrô Linha 8 sentido Créteil-Pointe du Lac → descer em Concorde → Caminhar pelos Jardins das Tulherias até o Louvre.",
+        type: "transport"
+      },
+      {
+        time: "08h30",
+        icon: "📸",
+        title: "Pirâmide de Vidro do Louvre",
+        desc: "Antes de entrar, paradinha obrigatória para fotos na icônica pirâmide!",
+        type: "highlight",
+        links: [{ label: "📍 Museu do Louvre", url: "https://maps.google.com/?q=Louvre+Museum+Paris" }]
+      },
+      {
+        time: "08h45",
+        icon: "🎟️",
+        title: "Fila de Entrada",
+        desc: "Chegar 15 min antes (tickets com entrada às 09h00). Entrar pela Entrada 2a da Pirâmide de Vidro.",
+        info: "Apresente o voucher recebido por e-mail na entrada."
+      },
+      {
+        time: "09h00",
+        icon: "🖼️",
+        title: "Visita ao Museu do Louvre",
+        desc: "O maior museu do mundo! Não perca: Mona Lisa (Denon, Sala 711), Vênus de Milo (Sully, Sala 346), Vitória de Samotrácia (Escadaria Daru).",
+        type: "highlight",
+        links: [{ label: "🗺️ Site Oficial", url: "https://www.louvre.fr" }]
+      },
+      {
+        time: "Tarde",
+        icon: "🚶",
+        title: "Caminhada Cultural – 3km pelo Sena",
+        desc: "Saída do Louvre pela Quai François Mitterrand. Paradas: Pont des Arts → Institut de France → Bouquinistes do Sena → Pont Neuf → Catedral de Notre-Dame.",
+        type: "highlight",
+        links: [
+          { label: "📍 Pont des Arts", url: "https://maps.google.com/?q=Pont+des+Arts+Paris" },
+          { label: "📍 Notre-Dame", url: "https://maps.google.com/?q=Notre+Dame+Cathedral+Paris" }
+        ]
+      },
+      {
+        time: "21h15",
+        icon: "🛥️",
+        title: "Cruzeiro no Rio Sena com Jantar",
+        desc: "Chegar 30 min antes (20h45) no pier da Paris Seine. Mostrar voucher a um funcionário para embarcar.",
+        type: "highlight",
+        info: "Se for direto: Saint-Michel Notre-Dame → RER C sentido Versailles → descer em Musée d'Orsay → andar até o pier.",
+        links: [
+          { label: "📍 Paris Seine Pier", url: "https://maps.google.com/?q=Paris+Seine+Restaurant+Boat+Musée+d'Orsay" }
+        ]
+      },
+      {
+        time: "Fim",
+        icon: "🚗",
+        title: "Retorno ao Hotel de Uber",
+        desc: "Destino: Ibis Styles Paris Eiffel Cambronne, 166 Bd de Grenelle. Boa noite!",
+        type: "transport",
+        links: [{ label: "🚗 Abrir Uber", url: "https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff[formatted_address]=166+Bd+de+Grenelle+Paris" }]
+      }
+    ]
+  },
+  {
+    num
+
